@@ -1,12 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromptWars Season 2 Prep</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GenAI-powered Urban Air Quality Assistant helping families and communities navigate winter smog with low-emission routines, indoor air hacks, and sustainable choices." />
+  <title>AeroCare AI — Urban Air Quality & Smog Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <h1>PromptWars Season 2 - Starter App</h1>
-    <p>Ready for Challenge 06!</p>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="app-header" role="banner">
+    <div class="container header-inner">
+      <div>
+        <span class="badge">Challenge 06 • GenAI Sustainability</span>
+        <h1>AeroCare AI</h1>
+        <p class="subtitle">Personalizing winter smog protection, low-emission routines, and clean-air swaps for your community.</p>
+      </div>
+      <div class="api-box" aria-label="Optional Gemini API Configuration">
+        <label for="api-key-input">Gemini API Key <span class="optional-tag">(Optional — Demo Mode works without key)</span></label>
+        <input
+          type="password"
+          id="api-key-input"
+          placeholder="Paste AIzaSy... key (stored in memory only)"
+          autocomplete="off"
+          aria-describedby="api-security-note"
+        />
+        <small id="api-security-note">Zero storage: your key stays strictly in browser session memory.</small>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container" role="main">
+    <section class="card input-card" aria-labelledby="profile-heading">
+      <h2 id="profile-heading">1. Customize Your Location &amp; Lifestyle</h2>
+      <form id="air-assistant-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="city-input">City / Neighborhood <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="city-input"
+              name="city"
+              placeholder="e.g., Jaipur, Delhi NCR, Lucknow, Bengaluru"
+              required
+              maxlength="60"
+            />
+            <div class="preset-chips" role="group" aria-label="Quick city presets">
+              <button type="button" class="chip" data-city="Jaipur (Winter Smog & Dust)">Jaipur</button>
+              <button type="button" class="chip" data-city="Delhi NCR (Severe PM2.5 Smog)">Delhi NCR</button>
+              <button type="button" class="chip" data-city="Mumbai (Coastal Haze & Traffic)">Mumbai</button>
+              <button type="button" class="chip" data-city="Bengaluru (Traffic Corridor)">Bengaluru</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="aqi-select">Current Local Air Condition</label>
+            <select id="aqi-select" name="aqiLevel">
+              <option value="moderate">Moderate (AQI 101–200) — Light Haze</option>
+              <option value="poor" selected>Poor (AQI 201–300) — Winter Smog Advisory</option>
+              <option value="severe">Severe (AQI 301–450+) — Heavy Smog Alert</option>
+              <option value="good">Satisfactory (AQI 51–100) — Preventive Mode</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="lifestyle-select">Household &amp; Daily Lifestyle</label>
+            <select id="lifestyle-select" name="lifestyle">
+              <option value="family">Family with Children / Elders at Home</option>
+              <option value="student">Student / Daily Commuter (Bike/Public Transit)</option>
+              <option value="wfh">Remote Worker / Indoor Home Office</option>
+              <option value="community">Community Organizer / Local Apartment Lead</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="commute-select">Primary Daily Transport &amp; Energy Habit</label>
+            <select id="commute-select" name="habit">
+              <option value="two-wheeler">Two-Wheeler / Solo Car Commute</option>
+              <option value="public-transit">Metro / Bus / Shared Auto</option>
+              <option value="home-heating">Heavy Indoor Heating / Gas Cooking</option>
+              <option value="outdoor-exercise">Morning Outdoor Walk / Sports</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="notes-input">Specific Concerns (Optional)</label>
+          <input
+            type="text"
+            id="notes-input"
+            name="notes"
+            placeholder="e.g., No mechanical air purifier at home, elderly parents with asthma, school drop-offs..."
+            maxlength="180"
+          />
+        </div>
+
+        <div id="form-error" class="error-banner" role="alert" hidden></div>
+
+        <div class="actions-row">
+          <button type="submit" id="generate-btn" class="primary-btn">
+            Generate Personalized Clean-Air Plan
+          </button>
+          <span id="mode-indicator" class="mode-pill" aria-live="polite">Ready • Smart GenAI Engine</span>
+        </div>
+      </form>
+    </section>
+
+    <section id="results-section" class="results-wrapper" aria-live="polite" hidden>
+      <div class="summary-banner card" id="impact-summary"></div>
+
+      <div class="cards-grid">
+        <article class="card result-card" aria-labelledby="routines-heading">
+          <h3 id="routines-heading">🌱 Low-Emission Daily Routines</h3>
+          <ul id="routines-list" class="action-list"></ul>
+        </article>
+
+        <article class="card result-card" aria-labelledby="indoor-heading">
+          <h3 id="indoor-heading">🏠 Indoor Air Quality Hacks</h3>
+          <ul id="indoor-list" class="action-list"></ul>
+        </article>
+
+        <article class="card result-card" aria-labelledby="swaps-heading">
+          <h3 id="swaps-heading">♻️ Sustainable Alternatives &amp; Direct Impact</h3>
+          <div id="swaps-list" class="swaps-container"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer" role="contentinfo">
+    <div class="container">
+      <p>Built by <strong>AgenticFlow Tech</strong> for PromptWars Challenge 06 • Designed for accessible, low-emission urban living.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
