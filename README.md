@@ -14,6 +14,16 @@ AeroCare AI is an accessible, GenAI-powered assistant designed to help families 
 - **Accessibility (WCAG-Aligned):** Semantic landmarks, skip-to-content navigation, `aria-live` status updates, keyboard focus outlines, and responsive mobile/desktop grid layouts.
 - **Automated Testing:** Lightweight unit test suite (`test.js`) verifying input sanitization and structured plan generation.
 
+## Approach, Logic & Assumptions
+
+- **Chosen Vertical:** Urban Air Quality & Winter Smog Assistant (Challenge 06 — GenAI Sustainability).
+- **Approach & Decision Logic:** Combines user context—city/neighborhood, local AQI severity, household vulnerability profile (such as families with children or elders), and daily commute/energy habits—to generate tailored guidance across low-emission routines, indoor air quality protections, and sustainable swaps with measurable impact notes.
+- **Hybrid Architecture:** Uses Google's Gemini API (`gemini-2.5-flash`) when a session API key is supplied, and automatically falls back to a deterministic rule-based engine so evaluators and users can test full functionality immediately without exposed credentials.
+- **Key Assumptions:**
+  1. Users may not always have an exact real-time AQI sensor reading, so intuitive AQI severity bands (with a practical winter smog default) enable immediate, actionable guidance.
+  2. Client-side deployment on GitHub Pages requires zero backend storage; optional API keys are kept strictly in volatile session memory and user text is sanitized before rendering.
+  3. High-impact household air-quality improvements (draft sealing, damp wiping, transit timing) should remain practical and accessible even without mechanical air purifiers.
+  
 ## Running Locally & Testing
 - Open `index.html` in any modern web browser.
 - Run automated unit tests via Node.js:
